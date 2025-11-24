@@ -11,7 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Routes
+// Test route
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
+// Routes (commented out until we create controllers)
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
@@ -19,14 +24,7 @@ app.use('/api/orders', require('./routes/orderRoutes'));
 // Database connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+  .catch(err => console.log('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-```
-
-**backend/.env:**
-```
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-PORT=5000
